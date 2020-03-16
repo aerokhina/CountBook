@@ -1,0 +1,71 @@
+<!--<h1>Главная страница</h1>
+<div class="btn-toolbar my-3">
+  <button class="btn btn-primary mr-3" routerLink="/add-record" type="button">Добавить запись</button>
+  <button class="btn btn-primary mr-3" routerLink="/add-shopping-list" type="button">Изменить список покупок</button>
+</div>
+<div class="col-xs-6" style="float:left;" *ngFor="let recordType of recordTypes">
+  <table class="table w-100" style="float: left;">
+    <thead>
+  <tr>
+    <th colspan="4">{{recordType.name}}</th>
+  </tr>
+  <tr>
+    <th>Наименование</th>
+    <th>Сумма</th>
+  </tr>
+  </thead>
+    <tbody>
+    <ng-container *ngFor="let category of recordType.category">
+      <tr>
+        <button (click)="onCategoryClick(category)"
+                class="btn btn-outline-primary" type="button">
+          {{category.name}}
+        </button>
+      </tr>
+      <ng-container *ngIf="!category.isCollapsed">
+        <tr *ngFor="let record of category.records">
+          <td>{{record.name}}</td>
+          <td>{{record.amount}}</td>
+          <td>
+            <button [routerLink]="['/edit-record', record.id]" class="btn btn-primary" type="button">Редактировать
+            </button>
+          </td>
+          <td>
+            <button (click)="onDelete(content, record.id)" class="btn btn-primary" type="button">x</button>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<div class="card bg-light mb-3" style="max-width: 14rem; float:right;">
+  <div class="card-header">Купить</div>
+  <div class="card-body">
+    <ul *ngFor="let item of shoppingItem; let i = index" class="list-group list-group-flush">
+      <li class="list-group-item">
+        <div class="custom-control custom-checkbox">
+          <input class="custom-control-input" id="checkShoppngItem{{i}}" type="checkbox">
+          <label class="custom-control-label" for="checkShoppngItem{{i}}">{{item.name}}</label>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Удаление записи</h4>
+    <button (click)="modal.dismiss()" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">Вы уверены, что хотите удалить запись?
+  </div>
+  <div class="modal-footer">
+    <button (click)="modal.close()" class="btn btn-outline-dark" type="button">Да</button>
+    <button (click)="modal.dismiss()" class="btn btn-outline-dark" type="button">Нет</button>
+  </div>
+</ng-template>
+-->

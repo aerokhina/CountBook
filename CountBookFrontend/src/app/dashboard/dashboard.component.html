@@ -1,0 +1,86 @@
+<h1>Журнал расходов</h1>
+<div class="table-responsive">
+  <table class="table w-100" style="float: left;">
+    <thead>
+    <tr>
+      <th>Расходы</th>
+      <th>Сумма</th>
+      <th>
+        <button [queryParams]="expenseQuery" class="btn btn-primary" routerLink="/add-record"
+                style="float: right;" type="button">Добавить расходы
+        </button>
+      </th>
+      <th>
+        <button [routerLink]="['/record-type-summary', expenseQuery.type]" class="btn btn-primary" style="float: right;"
+                type="button">Показать расходы
+        </button>
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngIf="dashboard">
+    <tr>
+      <td>Сегодня</td>
+      <td>{{dashboard.expense.today}}</td>
+    </tr>
+    <tr>
+      <td>Месяц</td>
+      <td>{{dashboard.expense.month}}</td>
+    </tr>
+    <tr>
+      <td>Год</td>
+      <td>{{dashboard.expense.year}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <table class="table w-100" style="float: left;">
+    <thead>
+    <tr>
+      <th>Доходы</th>
+      <th>Сумма</th>
+      <th>
+        <button [queryParams]="incomeQuery" class="btn btn-primary" routerLink="/add-record"
+                style="float: right;" type="button">Добавить доходы
+        </button>
+      </th>
+      <th>
+        <button [routerLink]="['/record-type-summary', incomeQuery.type]" class="btn btn-primary" style="float: right;"
+                type="button">Показать
+          доходы
+        </button>
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngIf="dashboard">
+    <tr>
+      <td>Сегодня</td>
+      <td>{{dashboard.income.today}}</td>
+    </tr>
+    <tr>
+      <td>Месяц</td>
+      <td>{{dashboard.income.month}}</td>
+    </tr>
+    <tr>
+      <td>Год</td>
+      <td>{{dashboard.income.year}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <table class="table w-100" style="float: left;">
+    <thead>
+    <tr>
+      <th>Баланс</th>
+      <th>Сумма</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="dashboard">
+    <tr>
+      <td>Месяц</td>
+      <td>{{dashboard.balance.month}}</td>
+    </tr>
+    <tr>
+      <td>Год</td>
+      <td>{{dashboard.balance.year}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

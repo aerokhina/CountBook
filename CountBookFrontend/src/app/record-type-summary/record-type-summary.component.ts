@@ -1,0 +1,63 @@
+import {Component, Inject, LOCALE_ID, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormStyle, getLocaleMonthNames, TranslationWidth} from "@angular/common";
+import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
+import {DatePeriod} from "../services/date-period";
+import {RecordService} from "../services/record.service";
+import {DashboardModelService, DatePeriodCategorySummary} from "../services/dashboard.service";
+import {ActivatedRoute} from "@angular/router";
+import {RecordType} from "../services/record";
+import {CategorySum} from "../services/category";
+import {formatDateISO} from "../utils/date-utils";
+import {Subscription} from "rxjs";
+
+@Component({
+  selector: 'app-record-type-summary',
+  templateUrl: './record-type-summary.component.html',
+  styleUrls: ['./record-type-summary.component.scss']
+})
+export class RecordTypeSummaryComponent implements OnInit {
+
+  form: FormGroup;
+  recordType: RecordType;
+  categories: CategorySum[];
+  totalSum: number;
+  queryParams: { startDate: string, endDate: string, recordType: RecordType };
+  subscription: Subscription;
+
+  constructor(
+    private fb: FormBuilder,
+    private dashboardService: DashboardModelService,
+    private route: ActivatedRoute,
+  ) {
+  }
+
+  get periodSelect() {
+    return this.form.controls.periodSelect;
+  }
+
+  onDatePeriodChanged(datePeriod: DatePeriod) {
+    if (this.subscription != undefined) {
+      this.subscription.unsubscribe();
+    }
+    const typeRecordString = this.route.snapshot.paramMap.get('recordType');
+    this.recordType = RecordType[typeRecordString];
+
+    this.subscription = this.dashboardService.getCategorySummary(datePeriod, this.recordType).subscribe(items => {
+      this.categories = items.categories;
+      this.totalSum = items.sum
+    });
+    this.queryParams = {
+      startDate: formatDateISO(datePeriod.startDate),
+      endDate: formatDateISO(datePeriod.endDate),
+      recordType: this.recordType
+    };
+  }
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      periodSelect: ['month', [Validators.required]],
+    });
+
+  }
+}

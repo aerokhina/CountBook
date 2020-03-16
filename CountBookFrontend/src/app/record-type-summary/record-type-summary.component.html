@@ -1,0 +1,44 @@
+<form [formGroup]="form">
+  <div class="form-group">
+    <select class="my-2 browser-default custom-select" formControlName="periodSelect">
+      <option value="month">Месяц</option>
+      <option value="week">Неделя</option>
+      <option value="day">День</option>
+      <option value="year">Год</option>
+      <option value="allTime">Все время</option>
+    </select>
+  </div>
+  <div *ngIf="periodSelect.value === 'month'">
+    <app-month-input (onChanged)="onDatePeriodChanged($event)"></app-month-input>
+  </div>
+  <div *ngIf="periodSelect.value === 'week'">
+    <app-week-input (onChanged)="onDatePeriodChanged($event)"></app-week-input>
+  </div>
+  <div *ngIf="periodSelect.value === 'day'">
+    <app-day-input (onChanged)="onDatePeriodChanged($event)"></app-day-input>
+  </div>
+  <div *ngIf="periodSelect.value === 'year'">
+    <app-year-input (onChanged)="onDatePeriodChanged($event)"></app-year-input>
+  </div>
+
+  <div *ngIf="periodSelect.value === 'allTime'">
+    <app-all-time-input (onChanged)="onDatePeriodChanged($event)"></app-all-time-input>
+  </div>
+
+  <table class="table w-100" style="float: left;">
+    <thead>
+    <tr>
+      <th>Всего</th>
+      <th>{{totalSum}}</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let item of categories">
+    <tr>
+      <td>
+        <a [queryParams]="queryParams" [routerLink]="['/record-summary', item.id]">{{item.name}} </a>
+      </td>
+      <td>{{item.sum}}</td>
+    </tr>
+    </tbody>
+  </table>
+</form>

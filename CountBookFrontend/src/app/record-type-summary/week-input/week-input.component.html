@@ -1,0 +1,9 @@
+<form [formGroup]="form">
+  <div class="row">
+    <button class="col-xs-4 col-md-offset-1" (click)="setPreviousWeek()"> <</button>
+    <input #d2="ngbDatepicker" class="datepicker-noinput" formControlName="weekSelect"
+           ngbDatepicker placeholder="yyyy-mm-dd">
+    <button class="col-xs-4 col-md-offset-1"  (click)="d2.toggle()"> {{currentWeekString}} </button>
+    <button class="col-xs-4 col-md-offset-1" (click)="setNextWeek()"> ></button>
+  </div>
+</form>

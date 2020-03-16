@@ -1,0 +1,9 @@
+<form [formGroup]="form">
+  <div class="row">
+    <button class="col-xs-4 col-md-offset-1" (click)="setPreviousYear()"> <</button>
+    <select class="col-xs-4 col-md-offset-1" formControlName="yearSelect">
+      <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
+    </select>
+    <button class="col-xs-4 col-md-offset-1" (click)="setNextYear()"> ></button>
+  </div>
+</form>

@@ -1,0 +1,136 @@
+<div class="form-block container">
+  <h1>{{id ? 'Редактировать запись' : 'Добавить запись'}}</h1>
+  <form [formGroup]="form">
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col-md-4 mr-3">
+          <div class="input-group">
+            <input #d2="ngbDatepicker" class="form-control" formControlName="date"
+                   ngbDatepicker placeholder="yyyy-mm-dd">
+            <div class="input-group-append">
+              <button (click)="d2.toggle()" class="btn btn-outline-secondary calendar" type="button"></button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mr-3">
+          <button (click)="setToday()" class="btn btn-outline-primary">Сегодня</button>
+        </div>
+      </div>
+      <div *ngIf="date.invalid && (date.dirty || date.touched)"
+           class="alert alert-danger">
+        <div *ngIf="date.errors.required">
+          Введите дату
+        </div>
+      </div>
+    </div>
+
+    <div class="w-100">
+      <div class="form-group">
+        <label class="my-2" for="name">Наименование</label>
+        <input class="form-control" formControlName="name" id="name" placeholder="Наименование" type="text"/>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="name.errors.required">
+            Введите наименование.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="my-2" for="amount">Сумма</label>
+        <input class="form-control" formControlName="amount" id="amount" placeholder="Сумма" type="number"/>
+        <div *ngIf="amount.invalid && (amount.dirty || amount.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="amount.errors.required">
+            Введите сумму.
+          </div>
+          <div *ngIf="amount.errors.pattern">
+            Сумма должна быть положительным числом, максимум с двумя знаками после точки.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <select class="my-2 browser-default custom-select" formControlName="typeSelect">
+          <option disabled hidden selected value="">Выбрать тип</option>
+          <option value="{{recordType.Expense}}">Раcход</option>
+          <option value="{{recordType.Income}}">Доход</option>
+        </select>
+        <div *ngIf="typeSelect.invalid && (typeSelect.dirty || typeSelect.touched)"
+             class="alert alert-danger">
+          <div *ngIf="typeSelect.errors.required">
+            Выберите тип
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col-md-4 mr-3">
+            <select class="my-2 browser-default custom-select" formControlName="categorySelect">
+              <option disabled hidden selected value="">Выбрать категорию</option>
+              <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
+            </select>
+          </div>
+          <div class="col-md-4 mr-3">
+            <button (click)="onAddCategory(addCategory)" class="my-2 btn btn-primary">Добавить категорию</button>
+          </div>
+        </div>
+        <div *ngIf="categorySelect.invalid && (categorySelect.dirty || categorySelect.touched)"
+             class="alert alert-danger">
+          <div *ngIf="categorySelect.errors.required">
+            Выберите категорию
+          </div>
+        </div>
+      </div>
+
+      <button (click)="onSubmit()" class="my-3 btn btn-primary" type="submit">Ok</button>
+      <button (click)="onCancel(content)" class="btn btn-secondary float-right" type="button">Отмена</button>
+    </div>
+  </form>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Выход</h4>
+    <button (click)="modal.dismiss()" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">Вы уверены, что хотите выйти?
+  </div>
+  <div class="modal-footer">
+    <button (click)="modal.close()" class="btn btn-outline-dark" type="button">Да</button>
+    <button (click)="modal.dismiss()" class="btn btn-outline-dark" type="button">Нет</button>
+  </div>
+</ng-template>
+
+<ng-template #addCategory let-modal>
+  <div aria-hidden="true" class="modal fade" role="dialog" tabindex="-1">
+    <h4 class="modal-title" id="modalitem-basic-title">Добавить категорию</h4>
+    <button (click)="modal.dismiss()" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addCategoryWindow">
+      <div class="form-group">
+        <label for="categoryName">Наименование</label>
+        <div class="input-group">
+          <input formControlName="categoryName" id="categoryName" placeholder="Категория" type="text">
+          <div *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="categoryName.errors.required">
+              Введите наименование.
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="onAddCategoryName(modal)" class="btn btn-outline-dark" type="button">Добавить</button>
+    <button (click)="modal.dismiss()" class="btn btn-outline-dark" type="button">Отмена</button>
+  </div>
+</ng-template>

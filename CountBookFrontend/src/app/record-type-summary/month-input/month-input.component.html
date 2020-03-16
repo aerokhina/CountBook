@@ -1,0 +1,9 @@
+<form [formGroup]="form">
+  <div class="row">
+    <button class="col-xs-4 col-md-offset-1" (click)="setPreviousMonth()"> <</button>
+    <input #d2="ngbDatepicker" class="datepicker-noinput" formControlName="monthSelect"
+           ngbDatepicker placeholder="yyyy-mm-dd">
+    <button class="col-xs-4 col-md-offset-1"  (click)="d2.toggle()"> {{currentMonthString}} </button>
+    <button class="col-xs-4 col-md-offset-1" (click)="setNextMonth()"> ></button>
+  </div>
+</form>

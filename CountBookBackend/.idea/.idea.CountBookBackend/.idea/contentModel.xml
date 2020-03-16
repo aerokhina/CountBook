@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Projects\CountBook\CountBookBackend" t="IncludeFlat">
+      <e p="CountBookBackend" t="IncludeRecursive">
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include">
+          <e p="CategoryController.cs" t="Include" />
+          <e p="RecordController.cs" t="Include" />
+          <e p="ShoppingItemController.cs" t="Include" />
+          <e p="SummaryController.cs" t="Include" />
+        </e>
+        <e p="CountBookBackend.csproj" t="IncludeRecursive" />
+        <e p="Models" t="Include">
+          <e p="CategoryModel.cs" t="Include" />
+          <e p="RecordModels.cs" t="Include" />
+          <e p="ShoppingItemInputModel.cs" t="Include" />
+          <e p="SummaryModels.cs" t="Include" />
+          <e p="SummaryPeriodInputModel.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="CountBookBackend.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+      </e>
+      <e p="CountBookBackend.Data" t="IncludeRecursive">
+        <e p="ApplicationContext.cs" t="Include" />
+        <e p="ApplicationUser.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Category.cs" t="Include" />
+        <e p="CountBookBackend.Data.csproj" t="IncludeRecursive" />
+        <e p="Migrations" t="Include">
+          <e p="20191028174957_Identity.cs" t="Include" />
+          <e p="20191028174957_Identity.Designer.cs" t="Include" />
+          <e p="20191030135021_Record.cs" t="Include" />
+          <e p="20191030135021_Record.Designer.cs" t="Include" />
+          <e p="20191107155649_ShoppingItem.cs" t="Include" />
+          <e p="20191107155649_ShoppingItem.Designer.cs" t="Include" />
+          <e p="20191120131425_Category.cs" t="Include" />
+          <e p="20191120131425_Category.Designer.cs" t="Include" />
+          <e p="20200113131944_RecordDate.cs" t="Include" />
+          <e p="20200113131944_RecordDate.Designer.cs" t="Include" />
+          <e p="ApplicationContextModelSnapshot.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="CountBookBackend.Data.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Record.cs" t="Include" />
+        <e p="RecordType.cs" t="Include" />
+        <e p="ShoppingItem.cs" t="Include" />
+      </e>
+      <e p="CountBookBackend.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+    <e p="C:\Users\chech\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\chech\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_CountBookBackend.-1091616657.00" t="ExcludeRecursive" />
+  </component>
+</project>

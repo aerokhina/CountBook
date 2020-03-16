@@ -1,0 +1,46 @@
+<div class="form-group">
+  <label class="title-label">Категория</label>
+  <label>{{categoryName}}</label>
+  <button class="btn btn-primary" style="float: right;" type="button" (click)="backClicked()">Назад
+  </button>
+</div>
+<div class="form-group">
+  <label class="title-label">Период</label>
+  <label>{{datePeriodString}}</label>
+</div>
+<table class="table w-100">
+  <tr>
+    <th>Наименование</th>
+    <th>Сумма</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tbody *ngFor="let record of records">
+  <tr>
+    <td>{{record.name}}</td>
+    <td>{{record.amount}}</td>
+    <td>
+      <button [routerLink]="['/edit-record', record.id]" class="btn btn-primary" type="button">Редактировать
+      </button>
+    </td>
+    <td>
+      <button class="btn btn-primary" type="button" (click)="onDelete(content, record.id)">x</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Удаление записи</h4>
+    <button (click)="modal.dismiss()" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">Вы уверены, что хотите удалить запись?
+  </div>
+  <div class="modal-footer">
+    <button (click)="modal.close()" class="btn btn-outline-dark" type="button">Да</button>
+    <button (click)="modal.dismiss()" class="btn btn-outline-dark" type="button">Нет</button>
+  </div>
+</ng-template>
