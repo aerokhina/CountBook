@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Router} from "@angular/router";
 import {ShoppingItemService} from "../services/shopping-item.service";
@@ -15,21 +15,26 @@ export class AddShoppingListComponent implements OnInit {
 
   form: FormGroup;
   shoppingItem: ShoppingItem[] = [];
+  isLoaded: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private shoppingItemService: ShoppingItemService,
     private modalService: NgbModal,
     private readonly router: Router
-  ) { }
+  ) {
+  }
 
   get name() {
     return this.form.controls.name;
   }
 
   ngOnInit() {
-    this.shoppingItemService.getItems().subscribe(items => this.shoppingItem = items
-  );
+    this.shoppingItemService.getItems().subscribe(items => {
+        this.shoppingItem = items;
+        this.isLoaded = true;
+      }
+    );
     this.form = this.fb.group({
       name: ['', [Validators.required]]
     });
@@ -53,10 +58,12 @@ export class AddShoppingListComponent implements OnInit {
       const item: CreateShoppingItemModel = {
         name: this.name.value
       };
+      this.isLoaded = false;
       this.shoppingItemService.addItem(item).subscribe(createdItem => {
         this.shoppingItem.push(createdItem);
+        this.isLoaded = true;
       });
-      }, (reason) => {
-      });
+    }, (reason) => {
+    });
   }
 }

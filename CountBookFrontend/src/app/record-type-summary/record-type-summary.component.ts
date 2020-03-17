@@ -1,6 +1,6 @@
 import {Component, Inject, LOCALE_ID, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {FormStyle, getLocaleMonthNames, TranslationWidth} from "@angular/common";
+import {FormStyle, getLocaleMonthNames, Location, TranslationWidth} from "@angular/common";
 import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
 import {DatePeriod} from "../services/date-period";
 import {RecordService} from "../services/record.service";
@@ -24,11 +24,13 @@ export class RecordTypeSummaryComponent implements OnInit {
   totalSum: number;
   queryParams: { startDate: string, endDate: string, recordType: RecordType };
   subscription: Subscription;
+  isLoaded: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private dashboardService: DashboardModelService,
     private route: ActivatedRoute,
+    private location: Location,
   ) {
   }
 
@@ -40,12 +42,14 @@ export class RecordTypeSummaryComponent implements OnInit {
     if (this.subscription != undefined) {
       this.subscription.unsubscribe();
     }
+    this.isLoaded = false;
     const typeRecordString = this.route.snapshot.paramMap.get('recordType');
     this.recordType = RecordType[typeRecordString];
 
     this.subscription = this.dashboardService.getCategorySummary(datePeriod, this.recordType).subscribe(items => {
       this.categories = items.categories;
-      this.totalSum = items.sum
+      this.totalSum = items.sum;
+      this.isLoaded = true;
     });
     this.queryParams = {
       startDate: formatDateISO(datePeriod.startDate),
@@ -58,6 +62,9 @@ export class RecordTypeSummaryComponent implements OnInit {
     this.form = this.fb.group({
       periodSelect: ['month', [Validators.required]],
     });
+  }
 
+  backClicked() {
+    this.location.back();
   }
 }

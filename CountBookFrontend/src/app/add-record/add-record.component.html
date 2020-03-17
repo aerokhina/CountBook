@@ -1,6 +1,9 @@
 <div class="form-block container">
   <h1>{{id ? 'Редактировать запись' : 'Добавить запись'}}</h1>
-  <form [formGroup]="form">
+
+  <div *ngIf = "!isLoaded" class="my-3 mx-auto loader"></div>
+
+  <form *ngIf = "isLoaded" [formGroup]="form">
     <div class="form-group">
       <div class="form-row">
         <div class="col-md-4 mr-3">
@@ -64,7 +67,10 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
+
+
+      <div *ngIf="!isLoadedCategory" class="my-3 mx-auto loaderSmall"></div>
+      <div *ngIf="isLoadedCategory" class="form-group">
         <div class="form-row">
           <div class="col-md-4 mr-3">
             <select class="my-2 browser-default custom-select" formControlName="categorySelect">

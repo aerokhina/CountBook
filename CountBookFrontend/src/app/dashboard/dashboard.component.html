@@ -1,22 +1,29 @@
 <h1>Журнал расходов</h1>
-<div class="table-responsive">
-  <table class="table w-100" style="float: left;">
+
+<div *ngIf="!isLoaded" class="my-3 mx-auto loader"></div>
+
+<div *ngIf="isLoaded" class="table-responsive">
+  <table class="table tableSmall" style="float: left;">
     <thead>
     <tr>
       <th>Расходы</th>
       <th>Сумма</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
       <th>
         <button [queryParams]="expenseQuery" class="btn btn-primary" routerLink="/add-record"
-                style="float: right;" type="button">Добавить расходы
+                style="float: left;" type="button">Добавить расходы
         </button>
       </th>
       <th>
-        <button [routerLink]="['/record-type-summary', expenseQuery.type]" class="btn btn-primary" style="float: right;"
+        <button [routerLink]="['/record-type-summary', expenseQuery.type]" class="btn btn-primary" style="float: left;"
                 type="button">Показать расходы
         </button>
       </th>
     </tr>
-    </thead>
+    </tfoot>
     <tbody *ngIf="dashboard">
     <tr>
       <td>Сегодня</td>
@@ -32,24 +39,29 @@
     </tr>
     </tbody>
   </table>
-  <table class="table w-100" style="float: left;">
+
+  <table class="table tableSmall" style="float: left;">
     <thead>
     <tr>
       <th>Доходы</th>
       <th>Сумма</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
       <th>
         <button [queryParams]="incomeQuery" class="btn btn-primary" routerLink="/add-record"
-                style="float: right;" type="button">Добавить доходы
+                style="float: left;" type="button">Добавить доходы
         </button>
       </th>
       <th>
-        <button [routerLink]="['/record-type-summary', incomeQuery.type]" class="btn btn-primary" style="float: right;"
+        <button [routerLink]="['/record-type-summary', incomeQuery.type]" class="btn btn-primary" style="float: left;"
                 type="button">Показать
           доходы
         </button>
       </th>
     </tr>
-    </thead>
+    </tfoot>
     <tbody *ngIf="dashboard">
     <tr>
       <td>Сегодня</td>
@@ -65,7 +77,23 @@
     </tr>
     </tbody>
   </table>
-  <table class="table w-100" style="float: left;">
+
+  <div class="card bg-light mb-3 cardStyle" style="max-width: 14rem; float:right;">
+    <div class="card-header">Купить
+      <button routerLink="/add-shopping-list" style="float: right;">Изменить</button>
+    </div>
+    <div class="card-body">
+      <ul *ngFor="let item of shoppingItem; let i = index" class="list-group list-group-flush">
+        <li class="list-group-item">
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" id="checkShoppngItem{{i}}" type="checkbox">
+            <label class="custom-control-label" for="checkShoppngItem{{i}}">{{item.name}}</label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <table class="table w-25" style="float: left;">
     <thead>
     <tr>
       <th>Баланс</th>
@@ -84,3 +112,4 @@
     </tbody>
   </table>
 </div>
+

@@ -7,6 +7,8 @@
       <option value="year">Год</option>
       <option value="allTime">Все время</option>
     </select>
+    <button class="btn btn-primary" style="float: right;" type="button" (click)="backClicked()">Назад
+    </button>
   </div>
   <div *ngIf="periodSelect.value === 'month'">
     <app-month-input (onChanged)="onDatePeriodChanged($event)"></app-month-input>
@@ -25,7 +27,9 @@
     <app-all-time-input (onChanged)="onDatePeriodChanged($event)"></app-all-time-input>
   </div>
 
-  <table class="table w-100" style="float: left;">
+  <div *ngIf = "!isLoaded" class="my-3 mx-auto loader"></div>
+
+  <table *ngIf="isLoaded" class="table w-100" style="float: left;">
     <thead>
     <tr>
       <th>Всего</th>

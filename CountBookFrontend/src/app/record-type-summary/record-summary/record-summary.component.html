@@ -1,6 +1,7 @@
 <div class="form-group">
   <label class="title-label">Категория</label>
-  <label>{{categoryName}}</label>
+  <div *ngIf="!isLoadedCategory" class="w3-half mx-auto loaderSmall"></div>
+  <label *ngIf="isLoadedCategory">{{categoryName}}</label>
   <button class="btn btn-primary" style="float: right;" type="button" (click)="backClicked()">Назад
   </button>
 </div>
@@ -8,7 +9,9 @@
   <label class="title-label">Период</label>
   <label>{{datePeriodString}}</label>
 </div>
-<table class="table w-100">
+
+<div *ngIf = "!isLoaded" class="my-3 mx-auto loader"></div>
+<table *ngIf="isLoaded" class="table w-100">
   <tr>
     <th>Наименование</th>
     <th>Сумма</th>

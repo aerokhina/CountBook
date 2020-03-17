@@ -18,6 +18,8 @@ export class RecordSummaryComponent implements OnInit {
   filter: RecordFilterModel;
   category: Category;
   records: Record[] = [];
+  isLoaded: boolean = false;
+  isLoadedCategory: boolean = false;
 
 
   constructor(
@@ -56,8 +58,14 @@ export class RecordSummaryComponent implements OnInit {
         },
         recordType: parseInt(recordTypeString)
       };
-      this.categoryService.getCategory(this.filter.categoryId).subscribe(item => this.category = item);
-      this.recordService.getRecords(this.filter).subscribe(records => this.records = records);
+      this.categoryService.getCategory(this.filter.categoryId).subscribe(item => {
+        this.category = item;
+        this.isLoadedCategory = true;
+      });
+      this.recordService.getRecords(this.filter).subscribe(records => {
+        this.records = records;
+        this.isLoaded = true;
+      });
     }
   }
 

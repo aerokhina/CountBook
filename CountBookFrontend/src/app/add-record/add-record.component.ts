@@ -22,6 +22,8 @@ export class AddRecordComponent implements OnInit {
   recordType = RecordType;
   id: number;
   categories: Category[] = [];
+  isLoaded: boolean = true;
+  isLoadedCategory: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -76,18 +78,23 @@ export class AddRecordComponent implements OnInit {
     this.addCategoryWindow = this.categoryFormBuilder.group({
       categoryName: ['', [Validators.required]],
     });
-    this.categoryService.getCategorys().subscribe(items => this.categories = items);
+    this.categoryService.getCategorys().subscribe(items => {
+      this.categories = items;
+      this.isLoadedCategory = true;
+    });
 
     const idString = this.route.snapshot.paramMap.get('id');
 
     if (idString) {
+      this.isLoaded = false;
       this.id = parseInt(idString);
       this.recordService.getRecord(this.id).subscribe(record => {
           this.name.setValue(record.name);
           this.amount.setValue(record.amount);
           this.typeSelect.setValue(record.type);
           this.categorySelect.setValue(record.categoryId);
-          this.date.setValue(record.date)
+          this.date.setValue(record.date);
+          this.isLoaded = true;
         }
       );
     }

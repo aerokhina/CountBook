@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {DashboardModelService} from "../services/dashboard.service";
 import {Dashboard} from "../services/dashboard";
 import {RecordType} from "../services/record";
+import {ShoppingItem} from "../services/shopping-item";
+import {ShoppingItemService} from "../services/shopping-item.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -13,15 +15,20 @@ export class DashboardComponent implements OnInit {
   dashboard: Dashboard;
   readonly expenseQuery = {type: RecordType[RecordType.Expense]};
   readonly incomeQuery = {type: RecordType[RecordType.Income]};
+  isLoaded: boolean = false;
+  shoppingItem: ShoppingItem[] = [];
 
   constructor(
-    private dashboardService: DashboardModelService,) {
+    private dashboardService: DashboardModelService,
+    private shoppingItemService: ShoppingItemService,) {
   }
 
   ngOnInit() {
     this.dashboardService.getDashboard().subscribe(item => {
       this.dashboard = item;
+      this.isLoaded = true;
     });
+    this.shoppingItemService.getItems().subscribe(items => this.shoppingItem = items);
   }
 
 }

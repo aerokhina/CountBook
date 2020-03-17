@@ -1,9 +1,10 @@
 <h1>Список покупок</h1>
 <div class="btn-toolbar my-3">
   <button class="btn btn-primary mr-3" type="button" (click)="onAddItem(addItem)">Добавить запись</button>
-  <button class="btn btn-primary mr-3" routerLink="/main-tab" type="button">Вернуться на главную</button>
+  <button class="btn btn-primary mr-3" routerLink="/dashboard" type="button">Вернуться на главную</button>
 </div>
-<div>
+<div *ngIf = "!isLoaded" class="my-3 mx-auto loader"></div>
+<div *ngIf="isLoaded">
   <table class="table w-100">
     <thead>
     <tr>
