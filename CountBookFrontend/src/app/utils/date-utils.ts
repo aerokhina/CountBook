@@ -1,16 +1,16 @@
 import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
 import {formatDate} from "@angular/common";
 
-export function formatDateOld(date: NgbDate): string {
-  return addZero(4, date.year) + "-" + addZero(2, date.month) + "-" + addZero(2, date.day);
+export function formatNgbDateISO(date: NgbDate): string {
+  return formatDateISO(new Date(date.year, date.month - 1, date.day));
 }
 
-export function addZero(digitsLength: number, source: number): string {
-  let text = source.toString();
-  while (text.length < digitsLength) {
-    text = '0' + text;
-  }
-  return text;
+export function parseNgbDate(dateString: string): NgbDate {
+  return dateToNgbDate(new Date(dateString));
+}
+
+export function dateToNgbDate(date: Date): NgbDate {
+  return new NgbDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
 }
 
 export function addDays(date: Date, daysNumber: number): Date {

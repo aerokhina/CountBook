@@ -8,7 +8,7 @@ import {CreateRecordModel, RecordType} from "../services/record";
 import {Category, CreateCategoryModel} from "../services/category";
 import {CategoryService} from "../services/category.service";
 import {CreateShoppingItemModel} from "../services/shopping-item";
-import {formatDateOld} from "../utils/date-utils";
+import {dateToNgbDate, formatDateOld, formatNgbDateISO, parseNgbDate} from "../utils/date-utils";
 
 @Component({
   selector: 'add-record',
@@ -61,8 +61,7 @@ export class AddRecordComponent implements OnInit {
   }
 
   setToday(): void {
-    const date = new Date();
-    this.date.setValue(new NgbDate(date.getFullYear(), date.getMonth() + 1, date.getDate()));
+    this.date.setValue(dateToNgbDate(new Date()));
   }
 
   ngOnInit(): void {
@@ -93,7 +92,7 @@ export class AddRecordComponent implements OnInit {
           this.amount.setValue(record.amount);
           this.typeSelect.setValue(record.type);
           this.categorySelect.setValue(record.categoryId);
-          this.date.setValue(record.date);
+          this.date.setValue(parseNgbDate(record.date));
           this.isLoaded = true;
         }
       );
@@ -111,7 +110,7 @@ export class AddRecordComponent implements OnInit {
       amount: this.amount.value,
       type: parseInt(this.typeSelect.value),
       categoryId: this.categorySelect.value,
-      date: formatDateOld(this.date.value)
+      date: formatNgbDateISO(this.date.value)
     };
     const recordObservable = this.id
       ? this.recordService.editRecord(this.id, record)
