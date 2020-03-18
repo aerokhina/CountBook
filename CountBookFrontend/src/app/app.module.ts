@@ -19,6 +19,7 @@ import { DayInputComponent } from './record-type-summary/day-input/day-input.com
 import { YearInputComponent } from './record-type-summary/year-input/year-input.component';
 import { AllTimeInputComponent } from './record-type-summary/all-time-input/all-time-input.component';
 import { RecordSummaryComponent } from './record-type-summary/record-summary/record-summary.component';
+import {ChartsModule} from "ng2-charts";
 
 registerLocaleData(localeRu);
 
@@ -43,7 +44,8 @@ registerLocaleData(localeRu);
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ChartsModule
   ],
   providers: [
     {

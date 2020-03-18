@@ -8,7 +8,7 @@ import {CreateRecordModel, RecordType} from "../services/record";
 import {Category, CreateCategoryModel} from "../services/category";
 import {CategoryService} from "../services/category.service";
 import {CreateShoppingItemModel} from "../services/shopping-item";
-import {dateToNgbDate, formatDateOld, formatNgbDateISO, parseNgbDate} from "../utils/date-utils";
+import {dateToNgbDate, formatNgbDateISO, parseNgbDate} from "../utils/date-utils";
 
 @Component({
   selector: 'add-record',

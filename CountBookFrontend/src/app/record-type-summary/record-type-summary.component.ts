@@ -10,6 +10,8 @@ import {RecordType} from "../services/record";
 import {CategorySum} from "../services/category";
 import {formatDateISO} from "../utils/date-utils";
 import {Subscription} from "rxjs";
+import {ChartType} from 'chart.js';
+import {MultiDataSet, Label} from 'ng2-charts';
 
 @Component({
   selector: 'app-record-type-summary',
@@ -20,11 +22,17 @@ export class RecordTypeSummaryComponent implements OnInit {
 
   form: FormGroup;
   recordType: RecordType;
-  categories: CategorySum[];
+  categories: CategorySum[] = [];
   totalSum: number;
   queryParams: { startDate: string, endDate: string, recordType: RecordType };
   subscription: Subscription;
   isLoaded: boolean = false;
+
+  doughnutChartType: ChartType = 'doughnut';
+  doughnutChartLabels: Label[] = [];
+  doughnutChartData: MultiDataSet = [
+    []
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -39,9 +47,12 @@ export class RecordTypeSummaryComponent implements OnInit {
   }
 
   onDatePeriodChanged(datePeriod: DatePeriod) {
+    this.doughnutChartLabels = [];
+    this.doughnutChartData[0] = [];
     if (this.subscription != undefined) {
       this.subscription.unsubscribe();
     }
+
     this.isLoaded = false;
     const typeRecordString = this.route.snapshot.paramMap.get('recordType');
     this.recordType = RecordType[typeRecordString];
@@ -50,7 +61,13 @@ export class RecordTypeSummaryComponent implements OnInit {
       this.categories = items.categories;
       this.totalSum = items.sum;
       this.isLoaded = true;
+
+      for (let category of this.categories) {
+        this.doughnutChartLabels.push(category.name);
+        this.doughnutChartData[0].push(category.sum);
+      }
     });
+
     this.queryParams = {
       startDate: formatDateISO(datePeriod.startDate),
       endDate: formatDateISO(datePeriod.endDate),
