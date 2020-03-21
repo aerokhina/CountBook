@@ -79,6 +79,8 @@ export class RecordTypeSummaryComponent implements OnInit {
     this.form = this.fb.group({
       periodSelect: ['month', [Validators.required]],
     });
+
+    this.periodSelect.valueChanges.subscribe(() => this.isLoaded = false);
   }
 
   backClicked() {
