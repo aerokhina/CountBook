@@ -1,0 +1,102 @@
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using CountBookBackend.Authentication;
+using CountBookBackend.Data;
+using CountBookBackend.Models;
+
+namespace CountBookBackend.Controllers
+{
+  public class UserController : Controller
+  {
+    private readonly UserManager<ApplicationUser> _userManager;
+
+    private readonly AuthenticationTokenService _authenticationTokenService;
+
+    public UserController(
+      UserManager<ApplicationUser> userManager,
+      AuthenticationTokenService authenticationTokenService
+    )
+    {
+      _userManager = userManager;
+      _authenticationTokenService = authenticationTokenService;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
+    {
+      var result = await _userManager.CreateAsync(
+        new ApplicationUser()
+        {
+          Email = model.Email,
+          UserName = model.Name,
+        },
+        model.Password
+      );
+
+      if (result.Succeeded)
+        return Ok();
+
+      return StatusCode(500, result.Errors);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login([FromBody] UserLoginModel model)
+    {
+      var user = await _userManager.Users.Where(x => x.Email == model.Email).FirstOrDefaultAsync();
+      if (user == null)
+      {
+        return BadLoginPassword();
+      }
+
+      var passwordMatches = await _userManager.CheckPasswordAsync(user, model.Password);
+
+      if (!passwordMatches)
+      {
+        return BadLoginPassword();
+      }
+
+      var authenticationToken = _authenticationTokenService.GetToken(model.Email);
+
+
+      return Ok(new {authenticationToken});
+    }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetProfile()
+    {
+      var email = User.GetEmail();
+      var user = await _userManager.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
+
+      return Ok(new EditProfileModel {Name = user.UserName});
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> EditProfile([FromBody] EditProfileModel model)
+    {
+      var email = User.GetEmail();
+      var user = await _userManager.Users.Where(x => x.Email == email).FirstAsync();
+
+      user.UserName = model.Name;
+
+      await _userManager.UpdateAsync(user);
+
+      return Ok();
+    }
+
+    private IActionResult BadLoginPassword()
+    {
+      return BadRequest(
+        new ProblemDetails()
+        {
+          Type = "BadLoginPassword"
+        }
+      );
+    }
+  }
+}

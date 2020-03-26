@@ -27,6 +27,7 @@ export class RecordTypeSummaryComponent implements OnInit {
   queryParams: { startDate: string, endDate: string, recordType: RecordType };
   subscription: Subscription;
   isLoaded: boolean = false;
+  isDataExist: boolean = false;
 
   doughnutChartType: ChartType = 'doughnut';
   doughnutChartLabels: Label[] = [];
@@ -61,6 +62,9 @@ export class RecordTypeSummaryComponent implements OnInit {
       this.categories = items.categories;
       this.totalSum = items.sum;
       this.isLoaded = true;
+      if (this.categories.length) {
+        this.isDataExist = true;
+      }
 
       for (let category of this.categories) {
         this.doughnutChartLabels.push(category.name);

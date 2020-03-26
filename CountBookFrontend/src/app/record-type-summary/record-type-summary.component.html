@@ -29,7 +29,9 @@
 
   <div *ngIf="!isLoaded" class="my-3 mx-auto loader"></div>
 
-  <table *ngIf="isLoaded" class="table w-50" style="float: left;">
+  <label *ngIf="isLoaded && !isDataExist" class="my-3 mx-auto">Данных за выбранный период нет</label>
+
+  <table *ngIf="isLoaded && isDataExist" class="table w-50" style="float: left;">
     <thead>
     <tr>
       <th>Всего</th>
@@ -46,7 +48,7 @@
     </tbody>
   </table>
 
-  <div *ngIf="isLoaded" class="table w-50" style="display: block; float: right;">
+  <div *ngIf="isLoaded && isDataExist" class="table w-50" style="display: block; float: right;">
     <canvas [chartType]="doughnutChartType"
             [data]="doughnutChartData"
             [labels]="doughnutChartLabels"

@@ -7,7 +7,6 @@ import {RecordService} from "../services/record.service";
 import {CreateRecordModel, RecordType} from "../services/record";
 import {Category, CreateCategoryModel} from "../services/category";
 import {CategoryService} from "../services/category.service";
-import {CreateShoppingItemModel} from "../services/shopping-item";
 import {dateToNgbDate, formatNgbDateISO, parseNgbDate} from "../utils/date-utils";
 
 @Component({

@@ -5,12 +5,18 @@
       <e p="CountBookBackend" t="IncludeRecursive">
         <e p="appsettings.Development.json" t="Include" />
         <e p="appsettings.json" t="Include" />
+        <e p="Authentication" t="Include">
+          <e p="AuthenticationExtensions.cs" t="Include" />
+          <e p="AuthenticationTokenService.cs" t="Include" />
+          <e p="AuthOptions.cs" t="Include" />
+        </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="CategoryController.cs" t="Include" />
           <e p="RecordController.cs" t="Include" />
           <e p="ShoppingItemController.cs" t="Include" />
           <e p="SummaryController.cs" t="Include" />
+          <e p="UserController.cs" t="Include" />
         </e>
         <e p="CountBookBackend.csproj" t="IncludeRecursive" />
         <e p="Models" t="Include">
@@ -19,6 +25,7 @@
           <e p="ShoppingItemInputModel.cs" t="Include" />
           <e p="SummaryModels.cs" t="Include" />
           <e p="SummaryPeriodInputModel.cs" t="Include" />
+          <e p="UserModel.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -66,7 +73,7 @@
       <e p="CountBookBackend.sln" t="IncludeFlat" />
       <e p="packages" t="ExcludeRecursive" />
     </e>
-    <e p="C:\Users\chech\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\chech\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_CountBookBackend.-1091616657.00" t="ExcludeRecursive" />
+    <e p="C:\Users\chech\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\chech\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_CountBookBackend.-1091616657.00" t="ExcludeRecursive" />
   </component>
 </project>
