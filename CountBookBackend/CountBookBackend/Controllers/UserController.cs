@@ -10,6 +10,7 @@ using CountBookBackend.Models;
 
 namespace CountBookBackend.Controllers
 {
+  [Route("[controller]")]
   public class UserController : Controller
   {
     private readonly UserManager<ApplicationUser> _userManager;
@@ -26,6 +27,7 @@ namespace CountBookBackend.Controllers
     }
 
     [HttpPost]
+    [Route("[action]")]
     public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
     {
       var result = await _userManager.CreateAsync(
@@ -44,6 +46,7 @@ namespace CountBookBackend.Controllers
     }
 
     [HttpPost]
+    [Route("[action]")]
     public async Task<IActionResult> Login([FromBody] UserLoginModel model)
     {
       var user = await _userManager.Users.Where(x => x.Email == model.Email).FirstOrDefaultAsync();
@@ -67,6 +70,7 @@ namespace CountBookBackend.Controllers
 
     [HttpGet]
     [Authorize]
+    [Route("[action]")]
     public async Task<IActionResult> GetProfile()
     {
       var email = User.GetEmail();
@@ -77,6 +81,7 @@ namespace CountBookBackend.Controllers
 
     [HttpPost]
     [Authorize]
+    [Route("[action]")]
     public async Task<IActionResult> EditProfile([FromBody] EditProfileModel model)
     {
       var email = User.GetEmail();

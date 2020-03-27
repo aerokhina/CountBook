@@ -20,6 +20,8 @@ import { YearInputComponent } from './record-type-summary/year-input/year-input.
 import { AllTimeInputComponent } from './record-type-summary/all-time-input/all-time-input.component';
 import { RecordSummaryComponent } from './record-type-summary/record-summary/record-summary.component';
 import {ChartsModule} from "ng2-charts";
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
 
 registerLocaleData(localeRu);
 
@@ -36,7 +38,9 @@ registerLocaleData(localeRu);
     DayInputComponent,
     YearInputComponent,
     AllTimeInputComponent,
-    RecordSummaryComponent
+    RecordSummaryComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

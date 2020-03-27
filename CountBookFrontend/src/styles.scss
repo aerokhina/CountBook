@@ -27,3 +27,7 @@ button.calendar, button.calendar:active {
   background-size: 23px;
   background-position: center;
 }
+
+input.ng-touched.ng-invalid{
+  border-color: red;
+}

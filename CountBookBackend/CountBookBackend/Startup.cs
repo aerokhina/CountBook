@@ -1,6 +1,8 @@
+using CountBookBackend.Authentication;
 using CountBookBackend.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +31,10 @@ namespace CountBookBackend
         options =>
           options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),
             npgsqOptions => { npgsqOptions.UseNodaTime();}));
+      
+      services.AddIdentity<ApplicationUser, IdentityRole>(
+          options => { options.User.RequireUniqueEmail = true; })
+        .AddEntityFrameworkStores<ApplicationContext>();
 
       services.AddCors(
         options =>
@@ -44,6 +50,8 @@ namespace CountBookBackend
         });
 
       services.AddSingleton<IClock>(SystemClock.Instance);
+
+      services.AddSingleton<AuthenticationTokenService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

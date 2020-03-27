@@ -4,6 +4,7 @@ import {Dashboard} from "../services/dashboard";
 import {RecordType} from "../services/record";
 import {ShoppingItem} from "../services/shopping-item";
 import {ShoppingItemService} from "../services/shopping-item.service";
+import {AccountService} from "../account/account.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardModelService,
-    private shoppingItemService: ShoppingItemService,) {
+    private shoppingItemService: ShoppingItemService,
+    private readonly accountService: AccountService) {
   }
 
   ngOnInit() {
@@ -29,6 +31,10 @@ export class DashboardComponent implements OnInit {
       this.isLoaded = true;
     });
     this.shoppingItemService.getItems().subscribe(items => this.shoppingItem = items);
+  }
+
+  logout(){
+    this.accountService.logout();
   }
 
 }

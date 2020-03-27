@@ -1,0 +1,68 @@
+<div class="form-block container">
+  <h1>Registration form</h1>
+  <form [formGroup]="form" (submit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter name"/>
+      <div *ngIf="name.invalid && (name.dirty || name.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="name.errors.required">
+          Name is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="text" class="form-control" id="email" formControlName="email" placeholder="Enter email" />
+      <div *ngIf="email.invalid && (email.dirty || email.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="email.errors.required">
+          Email is required.
+        </div>
+        <div *ngIf="email.errors.email">
+          Email is incorrect.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" id="password" formControlName="password" placeholder="Enter password"/>
+      <div *ngIf="password.invalid && (password.dirty || password.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="password.errors.required">
+          Password is required.
+        </div>
+
+        <div *ngIf="password.errors.pattern">
+          Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one
+          number and one special character.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="passwordConfirmation">Confirm password:</label>
+      <input type="password" class="form-control" id="passwordConfirmation" formControlName="passwordConfirmation" placeholder="Confirm password"/>
+      <div *ngIf="passwordConfirmation.invalid && (passwordConfirmation.dirty || passwordConfirmation.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="passwordConfirmation.errors.required">
+          Password Confirmation is required.
+        </div>
+
+        <div *ngIf="passwordConfirmation.errors.passwordMismatch">
+          Password do not match.
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Sign in</button>
+    <a routerLink="/login" class="float-right">Login</a>
+  </form>
+</div>
+
