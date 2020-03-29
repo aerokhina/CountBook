@@ -44,7 +44,9 @@ namespace CountBookBackend.Controllers
     [Route("[action]")]
     public async Task<IActionResult> GetList()
     {
+      var userId = User.GetId();
       var result = await _context.ShoppingItem
+        .Where(x => x.ApplicationUserId == userId)
         .Select(x => new ShoppingItemOutputModel
         {
           Name =  x.Name,
@@ -58,7 +60,10 @@ namespace CountBookBackend.Controllers
     [Route("[action]/{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      var record = await _context.ShoppingItem.SingleOrDefaultAsync(x => x.Id == id);
+      var userId = User.GetId();
+      var record = await _context.ShoppingItem
+        .Where(x => x.ApplicationUserId == userId)
+        .SingleOrDefaultAsync(x => x.Id == id);
       if (record == null)
       {
         throw new ArgumentException("Record not found");

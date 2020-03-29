@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using CountBookBackend.Authentication;
 using CountBookBackend.Data;
 using CountBookBackend.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -49,8 +50,9 @@ namespace CountBookBackend.Controllers
     [Route("[action]")]
     public async Task<IActionResult> GetByType([FromBody] SummaryPeriodInputModel model)
     {
+      var userId = User.GetId();
       IQueryable<Record> recordQuery = _context.Record
-        .Where(x => x.Type == model.RecordType)
+        .Where(x => x.Type == model.RecordType && x.ApplicationUserId == userId)
         .Include(x => x.Category);
 
       if (model.StartDate != null) 
@@ -81,7 +83,9 @@ namespace CountBookBackend.Controllers
 
     private async Task<decimal> Sum(RecordType type, LocalDate startDate, LocalDate endDate)
     {
+      var userId = User.GetId();
       var result = await _context.Record
+        .Where(x => x.ApplicationUserId == userId)
         .Where(x => x.Type == type && x.Date >= startDate && x.Date <= endDate)
         .SumAsync(x => x.Amount);
       return result;

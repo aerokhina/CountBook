@@ -54,7 +54,8 @@ namespace CountBookBackend.Controllers
     [Route("[action]")]
     public async Task<IActionResult> GetList([FromBody] RecordFilterModer model)
     {
-      IQueryable<Record> recordQuery = _context.Record;
+      var userId = User.GetId();
+      IQueryable<Record> recordQuery = _context.Record.Where(x => x.ApplicationUserId == userId);
 
       if (model.CategoryId != null)
       {
@@ -97,7 +98,10 @@ namespace CountBookBackend.Controllers
     [Route("[action]/{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      var record = await _context.Record.SingleOrDefaultAsync(x => x.Id == id);
+      var userId = User.GetId();
+      var record = await _context.Record
+        .Where(x => x.ApplicationUserId == userId)
+        .SingleOrDefaultAsync(x => x.Id == id);
       if (record == null)
       {
         throw new ArgumentException("Record not found");
@@ -112,7 +116,10 @@ namespace CountBookBackend.Controllers
     [Route("[action]/{id}")]
     public async Task<IActionResult> Edit(int id, [FromBody] RecordInputModel model)
     {
-      var record = await _context.Record.SingleOrDefaultAsync(x => x.Id == id);
+      var userId = User.GetId();
+      var record = await _context.Record
+        .Where(x => x.ApplicationUserId == userId)
+        .SingleOrDefaultAsync(x => x.Id == id);
       if (record == null)
       {
         throw new ArgumentException("Record not found");
@@ -122,6 +129,7 @@ namespace CountBookBackend.Controllers
       record.Amount = model.Amount;
       record.Type = model.Type;
       record.Date = model.Date;
+      record.CategoryId = model.CategoryId;
       _context.Update(record);
       _context.SaveChanges();
       return Ok();
@@ -131,7 +139,9 @@ namespace CountBookBackend.Controllers
     [Route("[action]/{id}")]
     public async Task<IActionResult> Get(int id)
     {
+      var userId = User.GetId();
       var record = await _context.Record
+        .Where(x => x.ApplicationUserId == userId)
         .Select(
           x => new RecordOutputModel
           {

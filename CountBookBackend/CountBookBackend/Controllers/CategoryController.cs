@@ -44,7 +44,9 @@ namespace CountBookBackend.Controllers
     [Route("[action]")]
     public async Task<IActionResult> GetList()
     {
+      var userId = User.GetId();
       var result = await _context.Category
+        .Where(x => x.ApplicationUserId == userId)
         .Select(
           x => new CategoryOutputModel
           {
@@ -59,7 +61,10 @@ namespace CountBookBackend.Controllers
     [Route("[action]/{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      var record = await _context.Category.SingleOrDefaultAsync(x => x.Id == id);
+      var userId = User.GetId();
+      var record = await _context.Category
+        .Where(x => x.ApplicationUserId == userId)
+        .SingleOrDefaultAsync(x => x.Id == id);
       if (record == null)
       {
         throw new ArgumentException("Record not found");
@@ -74,7 +79,10 @@ namespace CountBookBackend.Controllers
     [Route("[action]/{id}")]
     public async Task<IActionResult> Edit(int id, [FromBody] CategoryInputModel model)
     {
-      var item = await _context.Category.SingleOrDefaultAsync(x => x.Id == id);
+      var userId = User.GetId();
+      var item = await _context.Category
+        .Where(x => x.ApplicationUserId == userId)
+        .SingleOrDefaultAsync(x => x.Id == id);
       if (item == null)
       {
         throw new ArgumentException("Record not found");
@@ -90,7 +98,9 @@ namespace CountBookBackend.Controllers
     [Route("[action]/{id}")]
     public async Task<IActionResult> Get(int id)
     {
+      var userId = User.GetId();
       var item= await _context.Category
+        .Where(x => x.ApplicationUserId == userId)
         .Select(
           x => new CategoryOutputModel
           {
