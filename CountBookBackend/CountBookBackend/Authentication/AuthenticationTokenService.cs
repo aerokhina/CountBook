@@ -8,7 +8,7 @@ namespace CountBookBackend.Authentication
 {
     public class AuthenticationTokenService
     {
-        public string GetToken(string email)
+        public string GetToken(string id)
         {
             var now = DateTime.UtcNow;
             // создаем JWT-токен
@@ -18,7 +18,7 @@ namespace CountBookBackend.Authentication
                 notBefore: now,
                 claims: new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, email)
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, id)
                 },
                 expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
                 signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));

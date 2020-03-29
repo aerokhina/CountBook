@@ -62,7 +62,7 @@ namespace CountBookBackend.Controllers
         return BadLoginPassword();
       }
 
-      var authenticationToken = _authenticationTokenService.GetToken(model.Email);
+      var authenticationToken = _authenticationTokenService.GetToken(user.Id);
 
 
       return Ok(new {authenticationToken});
@@ -73,8 +73,8 @@ namespace CountBookBackend.Controllers
     [Route("[action]")]
     public async Task<IActionResult> GetProfile()
     {
-      var email = User.GetEmail();
-      var user = await _userManager.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
+      var id = User.GetId();
+      var user = await _userManager.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
 
       return Ok(new EditProfileModel {Name = user.UserName});
     }
@@ -84,8 +84,8 @@ namespace CountBookBackend.Controllers
     [Route("[action]")]
     public async Task<IActionResult> EditProfile([FromBody] EditProfileModel model)
     {
-      var email = User.GetEmail();
-      var user = await _userManager.Users.Where(x => x.Email == email).FirstAsync();
+      var id = User.GetId();
+      var user = await _userManager.Users.Where(x => x.Id == id).FirstAsync();
 
       user.UserName = model.Name;
 
