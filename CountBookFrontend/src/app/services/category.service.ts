@@ -1,35 +1,32 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {Injectable} from '@angular/core';
 import {Category, CreateCategoryModel} from "./category";
-import {CreateRecordModel, Record} from "./record";
-import {ShoppingItem} from "./shopping-item";
+import {HttpAuthService} from "../account/core/http-auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpAuthService) {
   }
 
   getCategorys() {
-    return this.http.get<Category[]>("http://localhost:5000/category/getlist");
+    return this.http.get<Category[]>("category/getlist");
   }
 
-  getCategory(id: number){
-    return this.http.get<Category>("http://localhost:5000/category/get/" + id);
+  getCategory(id: number) {
+    return this.http.get<Category>("category/get/" + id);
   }
 
-  addCategory(item: CreateCategoryModel){
-    return this.http.post<Category>("http://localhost:5000/category/create", item);
+  addCategory(item: CreateCategoryModel) {
+    return this.http.post<Category>("category/create", item);
   }
 
-  deleteCategory(id: number){
-    return this.http.post("http://localhost:5000/category/delete/" + id, {});
+  deleteCategory(id: number) {
+    return this.http.post("category/delete/" + id, {});
   }
 
-  editCategory(id: number, item: CreateCategoryModel)
-  {
-    return this.http.post("http://localhost:5000/category/edit/" + id, item);
+  editCategory(id: number, item: CreateCategoryModel) {
+    return this.http.post("category/edit/" + id, item);
   }
 }

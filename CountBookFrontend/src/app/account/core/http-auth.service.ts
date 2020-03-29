@@ -12,11 +12,11 @@ export class HttpAuthService {
 
   constructor(private http: HttpClient, private authTokenService: AuthTokenService) { }
 
-  post<T>(url: string, body: any | null): Observable<T> {
+  post<T = any>(url: string, body: any | null): Observable<T> {
     return this.http.post<T>(this.baseUrl + url, body, this.createOptions());
   }
 
-  get<T>(url: string): Observable<T> {
+  get<T = any>(url: string): Observable<T> {
     return this.http.get<T>(this.baseUrl + url, this.createOptions());
   }
 
