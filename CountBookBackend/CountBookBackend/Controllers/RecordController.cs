@@ -26,6 +26,9 @@ namespace CountBookBackend.Controllers
     public async Task<IActionResult> Create([FromBody] RecordInputModel model)
     {
       var userId = User.GetId();
+
+      await ValidateCategoryExists(userId, model.CategoryId);
+
       var record = new Record
       {
         Type = model.Type,
@@ -117,6 +120,9 @@ namespace CountBookBackend.Controllers
     public async Task<IActionResult> Edit(int id, [FromBody] RecordInputModel model)
     {
       var userId = User.GetId();
+
+      await ValidateCategoryExists(userId, model.CategoryId);
+
       var record = await _context.Record
         .Where(x => x.ApplicationUserId == userId)
         .SingleOrDefaultAsync(x => x.Id == id);
@@ -160,6 +166,17 @@ namespace CountBookBackend.Controllers
       }
 
       return Ok(record);
+    }
+
+    private async Task ValidateCategoryExists(string userId, int categoryId)
+    {
+      var categoryExists = await _context.Category
+        .Where(x => x.ApplicationUserId == userId)
+        .AnyAsync(x => x.Id == categoryId);
+      if (!categoryExists)
+      {
+        throw new ArgumentException("Category not found");
+      }
     }
   }
 }
