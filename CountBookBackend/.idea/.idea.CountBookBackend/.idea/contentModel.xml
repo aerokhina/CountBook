@@ -57,6 +57,8 @@
           <e p="20191120131425_Category.Designer.cs" t="Include" />
           <e p="20200113131944_RecordDate.cs" t="Include" />
           <e p="20200113131944_RecordDate.Designer.cs" t="Include" />
+          <e p="20200329102651_UserToEntities.cs" t="Include" />
+          <e p="20200329102651_UserToEntities.Designer.cs" t="Include" />
           <e p="ApplicationContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">

@@ -17,5 +17,9 @@ namespace CountBookBackend.Data
     public Category Category { get; set; }
 
     public LocalDate Date { get; set; }
+    
+    public string ApplicationUserId { get; set; }
+    
+    public ApplicationUser ApplicationUser { get; set; }
   }
 }
