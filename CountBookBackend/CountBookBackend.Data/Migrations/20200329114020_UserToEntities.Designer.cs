@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CountBookBackend.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200329102651_UserToEntities")]
+    [Migration("20200329114020_UserToEntities")]
     partial class UserToEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,6 +94,7 @@ namespace CountBookBackend.Data.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -117,6 +118,7 @@ namespace CountBookBackend.Data.Migrations
                         .HasColumnType("numeric");
 
                     b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("CategoryId")
@@ -148,6 +150,7 @@ namespace CountBookBackend.Data.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -294,14 +297,18 @@ namespace CountBookBackend.Data.Migrations
                 {
                     b.HasOne("CountBookBackend.Data.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CountBookBackend.Data.Record", b =>
                 {
                     b.HasOne("CountBookBackend.Data.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CountBookBackend.Data.Category", "Category")
                         .WithMany()
@@ -314,7 +321,9 @@ namespace CountBookBackend.Data.Migrations
                 {
                     b.HasOne("CountBookBackend.Data.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

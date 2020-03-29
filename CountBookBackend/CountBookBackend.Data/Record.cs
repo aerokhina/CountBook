@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using NodaTime;
 
 namespace CountBookBackend.Data
@@ -18,6 +19,7 @@ namespace CountBookBackend.Data
 
     public LocalDate Date { get; set; }
     
+    [Required]
     public string ApplicationUserId { get; set; }
     
     public ApplicationUser ApplicationUser { get; set; }

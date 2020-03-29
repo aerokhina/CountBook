@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace CountBookBackend.Data
 {
   public class ShoppingItem
@@ -6,6 +8,7 @@ namespace CountBookBackend.Data
 
     public string Name { get; set; }
     
+    [Required]
     public string ApplicationUserId { get; set; }
     
     public ApplicationUser ApplicationUser { get; set; }

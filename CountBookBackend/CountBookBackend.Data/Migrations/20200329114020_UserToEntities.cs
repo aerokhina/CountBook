@@ -9,17 +9,17 @@ namespace CountBookBackend.Data.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "ApplicationUserId",
                 table: "ShoppingItem",
-                nullable: true);
+                nullable: false);
 
             migrationBuilder.AddColumn<string>(
                 name: "ApplicationUserId",
                 table: "Record",
-                nullable: true);
+                nullable: false);
 
             migrationBuilder.AddColumn<string>(
                 name: "ApplicationUserId",
                 table: "Category",
-                nullable: true);
+                nullable: false);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingItem_ApplicationUserId",
@@ -42,7 +42,7 @@ namespace CountBookBackend.Data.Migrations
                 column: "ApplicationUserId",
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Record_AspNetUsers_ApplicationUserId",
@@ -50,7 +50,7 @@ namespace CountBookBackend.Data.Migrations
                 column: "ApplicationUserId",
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ShoppingItem_AspNetUsers_ApplicationUserId",
@@ -58,7 +58,7 @@ namespace CountBookBackend.Data.Migrations
                 column: "ApplicationUserId",
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
