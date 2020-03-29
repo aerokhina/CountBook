@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CountBookBackend.Authentication;
 using CountBookBackend.Data;
 using CountBookBackend.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -24,13 +25,15 @@ namespace CountBookBackend.Controllers
     [Route("[action]")]
     public async Task<IActionResult> Create([FromBody] RecordInputModel model)
     {
+      var userId = User.GetId();
       var record = new Record
       {
         Type = model.Type,
         Name = model.Name,
         Amount = model.Amount,
         CategoryId = model.CategoryId,
-        Date = model.Date
+        Date = model.Date,
+        ApplicationUserId = userId
       };
       _context.Add(record);
       await _context.SaveChangesAsync();

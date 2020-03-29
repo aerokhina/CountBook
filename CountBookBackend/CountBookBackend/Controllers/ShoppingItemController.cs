@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CountBookBackend.Authentication;
 using CountBookBackend.Data;
 using CountBookBackend.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -24,9 +25,11 @@ namespace CountBookBackend.Controllers
     [Route("[action]")]
     public async Task<IActionResult> Create([FromBody] ShoppingItemInputModel model)
     {
+      var userId = User.GetId();
       var item = new ShoppingItem
       {
         Name = model.Name,
+        ApplicationUserId = userId
       };
       _context.Add(item);
       await _context.SaveChangesAsync();
