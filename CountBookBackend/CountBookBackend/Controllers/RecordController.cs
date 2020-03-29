@@ -3,11 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using CountBookBackend.Data;
 using CountBookBackend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CountBookBackend.Controllers
 {
+  [Authorize]
   [Route("[controller]")]
   public class RecordController : Controller
   {
@@ -41,7 +43,8 @@ namespace CountBookBackend.Controllers
           Id = record.Id,
           CategoryId = record.CategoryId,
           Date = record.Date
-        });
+        }
+      );
     }
 
     [HttpPost]
@@ -49,27 +52,27 @@ namespace CountBookBackend.Controllers
     public async Task<IActionResult> GetList([FromBody] RecordFilterModer model)
     {
       IQueryable<Record> recordQuery = _context.Record;
-      
-      if (model.CategoryId != null) 
+
+      if (model.CategoryId != null)
       {
         recordQuery = recordQuery.Where(x => x.CategoryId == model.CategoryId);
       }
-      
-      if (model.StartDate != null) 
+
+      if (model.StartDate != null)
       {
         recordQuery = recordQuery.Where(x => x.Date >= model.StartDate);
       }
-      
-      if(model.EndDate != null)
+
+      if (model.EndDate != null)
       {
         recordQuery = recordQuery.Where(x => x.Date <= model.EndDate);
       }
-      
-      if(model.Type != null)
+
+      if (model.Type != null)
       {
         recordQuery = recordQuery.Where(x => x.Type == model.Type);
       }
-      
+
       var records = await recordQuery.ToListAsync();
 
       var result = records
@@ -135,7 +138,8 @@ namespace CountBookBackend.Controllers
             Amount = x.Amount,
             CategoryId = x.CategoryId,
             Date = x.Date
-          })
+          }
+        )
         .SingleOrDefaultAsync(x => x.Id == id);
       if (record == null)
       {

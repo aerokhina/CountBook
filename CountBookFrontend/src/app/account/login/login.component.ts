@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AccountService} from "../account.service";
+import {validateAllFormFields} from "../../../core/validation";
 
 @Component({
   selector: 'app-login',
@@ -32,6 +33,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    validateAllFormFields(this.form);
+    if (!this.form.valid) {
+      return;
+    }
+
     const controls = this.form.controls;
     const loginResult = this.accountService.login(controls.email.value, controls.password.value);
     loginResult.subscribe(

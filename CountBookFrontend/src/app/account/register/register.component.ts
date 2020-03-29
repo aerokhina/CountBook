@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AccountService} from "../account.service";
+import {validateAllFormFields} from "../../../core/validation";
 
 @Component({
   selector: 'app-register',
@@ -51,6 +52,11 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    validateAllFormFields(this.form);
+    if (!this.form.valid) {
+      return;
+    }
+
     const controls = this.form.controls;
     this.accountService.register(controls.name.value, controls.email.value, controls.password.value).subscribe(
       result => {

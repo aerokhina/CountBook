@@ -2,12 +2,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using CountBookBackend.Data;
 using CountBookBackend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
 
 namespace CountBookBackend.Controllers
 {
+  [Authorize]
   [Route("[controller]")]
   public class SummaryController : Controller
   {
