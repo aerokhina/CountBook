@@ -98,6 +98,41 @@ namespace CountBookBackend.Controllers
 
       return Ok();
     }
+    
+    [HttpPost]
+    [Authorize]
+    [Route("[action]")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
+    {
+      var id = User.GetId();
+      var user = await _userManager.Users.Where(x => x.Id == id).FirstAsync();
+
+      var isNewPasswordSameFromOld = await _userManager.CheckPasswordAsync(user, model.NewPassword);
+
+      if (isNewPasswordSameFromOld)
+      {
+        return BadRequest(
+          new ProblemDetails()
+          {
+            Type = "NewPasswordIsOld"
+          }
+        );
+      }
+
+      var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+
+      if (!changePasswordResult.Succeeded)
+      {
+        return BadRequest(
+          new ProblemDetails()
+          {
+            Type = "BadPassword"
+          }
+        );
+      }
+
+      return Ok();
+    }
 
     private IActionResult BadLoginPassword()
     {

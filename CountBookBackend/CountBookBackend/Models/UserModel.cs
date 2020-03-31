@@ -22,4 +22,11 @@ namespace CountBookBackend.Models
       
       public string Email { get; set; }
     }
+
+    public class ChangePasswordModel
+    {
+      public string OldPassword { get; set; }
+      
+      public string NewPassword { get; set; }
+    }
 }

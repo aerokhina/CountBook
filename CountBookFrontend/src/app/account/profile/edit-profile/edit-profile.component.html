@@ -1,5 +1,5 @@
 <h1>Редактировать профиль</h1>
-<form [formGroup]="form" (submit)="onSubmit()">
+<form (submit)="onSubmit()" [formGroup]="form">
   <div class="form-group">
     <label for="name">Имя:</label>
     <input class="form-control" formControlName="name" id="name" placeholder="Введите имя" type="text"/>
@@ -26,6 +26,6 @@
       </div>
     </div>
   </div>
-  <button (click)="onSubmit()" class="btn btn-primary" type="submit">Ok</button>
-  <button routerLink="/profile" class="btn btn-secondary float-right" type="button">Отмена</button>
+  <button class="btn btn-primary" type="submit">Ok</button>
+  <button class="btn btn-secondary float-right" routerLink="/profile" type="button">Отмена</button>
 </form>

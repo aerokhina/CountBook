@@ -24,6 +24,7 @@ import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
+import { ChangePasswordComponent } from './account/profile/change-password/change-password.component';
 
 registerLocaleData(localeRu);
 
@@ -44,7 +45,8 @@ registerLocaleData(localeRu);
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

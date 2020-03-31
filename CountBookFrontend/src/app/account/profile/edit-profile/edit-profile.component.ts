@@ -4,8 +4,6 @@ import {AccountService} from "../../account.service";
 import {User} from "../../../services/user";
 import {UserService} from "../../../services/user.service";
 import {validateAllFormFields} from "../../../../core/validation";
-import {CreateRecordModel} from "../../../services/record";
-import {formatNgbDateISO} from "../../../utils/date-utils";
 import {Router} from "@angular/router";
 
 @Component({
@@ -16,7 +14,6 @@ import {Router} from "@angular/router";
 export class EditProfileComponent implements OnInit {
 
   form: FormGroup;
-  user: User;
 
   constructor(private fb: FormBuilder,
               private readonly accountService: AccountService,

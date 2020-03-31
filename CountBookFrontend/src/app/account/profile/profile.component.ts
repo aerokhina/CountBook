@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {User} from "../../services/user";
 
@@ -9,11 +9,15 @@ import {User} from "../../services/user";
 })
 export class ProfileComponent implements OnInit {
 
-  user: User;
+  user: User = {
+    name: "",
+    email: ""
+  };
 
   constructor(
     private userService: UserService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.userService.getUser().subscribe(item => {

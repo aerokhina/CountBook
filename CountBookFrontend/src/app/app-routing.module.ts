@@ -11,6 +11,7 @@ import {AuthGuard} from "./account/auth.guard";
 import {RegisterComponent} from "./account/register/register.component";
 import {ProfileComponent} from "./account/profile/profile.component";
 import {EditProfileComponent} from "./account/profile/edit-profile/edit-profile.component";
+import {ChangePasswordComponent} from "./account/profile/change-password/change-password.component";
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'editprofile', component: EditProfileComponent, canActivate: [AuthGuard]},
+  {path: 'changepassword', component: ChangePasswordComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: '/', canActivate: [AuthGuard]},
 ];
 

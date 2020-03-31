@@ -4,6 +4,6 @@ export interface User{
 }
 
 export interface UserChangePassword{
-  id: number;
   oldPassword: string;
+  newPassword: string;
 }
