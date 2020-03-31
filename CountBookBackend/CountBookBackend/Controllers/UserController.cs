@@ -76,7 +76,11 @@ namespace CountBookBackend.Controllers
       var id = User.GetId();
       var user = await _userManager.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
 
-      return Ok(new EditProfileModel {Name = user.UserName});
+      return Ok(new EditProfileModel
+      {
+        Name = user.UserName,
+        Email = user.Email
+      });
     }
 
     [HttpPost]
@@ -88,6 +92,7 @@ namespace CountBookBackend.Controllers
       var user = await _userManager.Users.Where(x => x.Id == id).FirstAsync();
 
       user.UserName = model.Name;
+      user.Email = model.Email;
 
       await _userManager.UpdateAsync(user);
 

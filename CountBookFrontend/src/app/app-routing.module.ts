@@ -9,6 +9,8 @@ import {RecordSummaryComponent} from "./record-type-summary/record-summary/recor
 import {LoginComponent} from "./account/login/login.component";
 import {AuthGuard} from "./account/auth.guard";
 import {RegisterComponent} from "./account/register/register.component";
+import {ProfileComponent} from "./account/profile/profile.component";
+import {EditProfileComponent} from "./account/profile/edit-profile/edit-profile.component";
 
 
 const routes: Routes = [
@@ -22,6 +24,8 @@ const routes: Routes = [
   {path: '', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'editprofile', component: EditProfileComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: '/', canActivate: [AuthGuard]},
 ];
 

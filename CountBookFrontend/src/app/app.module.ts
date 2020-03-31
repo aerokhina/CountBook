@@ -22,6 +22,8 @@ import { RecordSummaryComponent } from './record-type-summary/record-summary/rec
 import {ChartsModule} from "ng2-charts";
 import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
+import { ProfileComponent } from './account/profile/profile.component';
+import { EditProfileComponent } from './account/profile/edit-profile/edit-profile.component';
 
 registerLocaleData(localeRu);
 
@@ -40,7 +42,9 @@ registerLocaleData(localeRu);
     AllTimeInputComponent,
     RecordSummaryComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,
