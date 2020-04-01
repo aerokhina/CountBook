@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {User} from "../../services/user";
+import {AccountService} from "../account.service";
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,8 @@ export class ProfileComponent implements OnInit {
   };
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private readonly accountService: AccountService
   ) {
   }
 
@@ -23,7 +25,10 @@ export class ProfileComponent implements OnInit {
     this.userService.getUser().subscribe(item => {
       this.user = item;
     });
+  }
 
+  logout() {
+    this.accountService.logout();
   }
 
 }
