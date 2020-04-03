@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {AddRecordComponent} from "./add-record/add-record.component";
 import {MainTabComponent} from "./main-tab/main-tab.component";
 import {AddShoppingListComponent} from "./add-shopping-list/add-shopping-list.component";
@@ -26,8 +26,8 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'editprofile', component: EditProfileComponent, canActivate: [AuthGuard]},
-  {path: 'changepassword', component: ChangePasswordComponent, canActivate: [AuthGuard]},
+  {path: 'edit-profile', component: EditProfileComponent, canActivate: [AuthGuard]},
+  {path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: '/', canActivate: [AuthGuard]},
 ];
 
@@ -35,4 +35,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

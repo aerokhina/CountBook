@@ -58,7 +58,8 @@ namespace CountBookBackend.Controllers
     public async Task<IActionResult> GetList([FromBody] RecordFilterModer model)
     {
       var userId = User.GetId();
-      IQueryable<Record> recordQuery = _context.Record.Where(x => x.ApplicationUserId == userId);
+      IQueryable<Record> recordQuery = _context.Record
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId));
 
       if (model.CategoryId != null)
       {
@@ -103,7 +104,7 @@ namespace CountBookBackend.Controllers
     {
       var userId = User.GetId();
       var record = await _context.Record
-        .Where(x => x.ApplicationUserId == userId)
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId))
         .SingleOrDefaultAsync(x => x.Id == id);
       if (record == null)
       {
@@ -124,7 +125,7 @@ namespace CountBookBackend.Controllers
       await ValidateCategoryExists(userId, model.CategoryId);
 
       var record = await _context.Record
-        .Where(x => x.ApplicationUserId == userId)
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId))
         .SingleOrDefaultAsync(x => x.Id == id);
       if (record == null)
       {
@@ -147,7 +148,7 @@ namespace CountBookBackend.Controllers
     {
       var userId = User.GetId();
       var record = await _context.Record
-        .Where(x => x.ApplicationUserId == userId)
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId))
         .Select(
           x => new RecordOutputModel
           {
@@ -171,7 +172,7 @@ namespace CountBookBackend.Controllers
     private async Task ValidateCategoryExists(string userId, int categoryId)
     {
       var categoryExists = await _context.Category
-        .Where(x => x.ApplicationUserId == userId)
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId))
         .AnyAsync(x => x.Id == categoryId);
       if (!categoryExists)
       {

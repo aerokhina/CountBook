@@ -4,7 +4,7 @@ using NodaTime;
 
 namespace CountBookBackend.Data
 {
-  public class Record
+  public class Record : IUserEntity
   {
     public int Id { get; set; }
     public RecordType Type { get; set; }

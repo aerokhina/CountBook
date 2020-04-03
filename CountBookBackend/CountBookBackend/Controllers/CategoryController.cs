@@ -4,6 +4,7 @@ using System.Linq;
 using CountBookBackend.Authentication;
 using CountBookBackend.Data;
 using CountBookBackend.Models;
+using CountBookBackend.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -45,8 +46,9 @@ namespace CountBookBackend.Controllers
     public async Task<IActionResult> GetList()
     {
       var userId = User.GetId();
+
       var result = await _context.Category
-        .Where(x => x.ApplicationUserId == userId)
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId))
         .Select(
           x => new CategoryOutputModel
           {
@@ -54,6 +56,7 @@ namespace CountBookBackend.Controllers
             Id = x.Id,
           })
         .ToListAsync();
+      
       return Ok(result);
     }
     
@@ -62,8 +65,9 @@ namespace CountBookBackend.Controllers
     public async Task<IActionResult> Delete(int id)
     {
       var userId = User.GetId();
+      
       var record = await _context.Category
-        .Where(x => x.ApplicationUserId == userId)
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId))
         .SingleOrDefaultAsync(x => x.Id == id);
       if (record == null)
       {
@@ -81,7 +85,7 @@ namespace CountBookBackend.Controllers
     {
       var userId = User.GetId();
       var item = await _context.Category
-        .Where(x => x.ApplicationUserId == userId)
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId))
         .SingleOrDefaultAsync(x => x.Id == id);
       if (item == null)
       {
@@ -100,7 +104,7 @@ namespace CountBookBackend.Controllers
     {
       var userId = User.GetId();
       var item= await _context.Category
-        .Where(x => x.ApplicationUserId == userId)
+        .FilterByUserOrGroup(userId)
         .Select(
           x => new CategoryOutputModel
           {

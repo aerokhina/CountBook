@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
-import {User} from "../../services/user";
+import {UserProfileModel} from "../../services/user";
 import {AccountService} from "../account.service";
 
 @Component({
@@ -10,9 +10,11 @@ import {AccountService} from "../account.service";
 })
 export class ProfileComponent implements OnInit {
 
-  user: User = {
+  user: UserProfileModel = {
     name: "",
-    email: ""
+    email: "",
+    userGroupName: "",
+    userGroupId: 0
   };
 
   constructor(

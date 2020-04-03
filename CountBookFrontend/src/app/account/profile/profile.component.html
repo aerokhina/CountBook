@@ -8,8 +8,12 @@
   <label>{{user.email}}</label>
 </div>
 <div>
-  <button class="btn btn-primary mr-2" routerLink="/editprofile">Редактировать данные</button>
-  <button class="btn btn-primary mr-2" routerLink="/changepassword">Изменить пароль</button>
+  <label class="title-label">Группа</label>
+  <label>{{user.userGroupName}}</label>
+</div>
+<div>
+  <button class="btn btn-primary mr-2" routerLink="/edit-profile">Редактировать данные</button>
+  <button class="btn btn-primary mr-2" routerLink="/change-password">Изменить пароль</button>
   <button class="btn btn-secondary mr-2" routerLink="/dashboard" type="button">Назад</button>
-  <button class="btn btn-secondary" (click)="logout()">Выйти</button>
+  <button (click)="logout()" class="btn btn-secondary">Выйти</button>
 </div>

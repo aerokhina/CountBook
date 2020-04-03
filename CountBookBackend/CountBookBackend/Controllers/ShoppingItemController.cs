@@ -46,7 +46,7 @@ namespace CountBookBackend.Controllers
     {
       var userId = User.GetId();
       var result = await _context.ShoppingItem
-        .Where(x => x.ApplicationUserId == userId)
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId))
         .Select(x => new ShoppingItemOutputModel
         {
           Name =  x.Name,
@@ -62,7 +62,7 @@ namespace CountBookBackend.Controllers
     {
       var userId = User.GetId();
       var record = await _context.ShoppingItem
-        .Where(x => x.ApplicationUserId == userId)
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId))
         .SingleOrDefaultAsync(x => x.Id == id);
       if (record == null)
       {

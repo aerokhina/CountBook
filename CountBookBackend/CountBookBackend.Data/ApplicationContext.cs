@@ -15,5 +15,7 @@ namespace CountBookBackend.Data
     public DbSet<ShoppingItem> ShoppingItem{ get; set; }
     
     public DbSet<Category> Category { get; set; }
+
+    public DbSet<UserGroup> UserGroup { get; set; }
   }
 }

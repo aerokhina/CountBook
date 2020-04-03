@@ -3,6 +3,7 @@ using System;
 using CountBookBackend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CountBookBackend.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200401154206_UserGroup")]
+    partial class UserGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,9 +46,6 @@ namespace CountBookBackend.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("character varying(256)")
@@ -317,7 +316,7 @@ namespace CountBookBackend.Data.Migrations
             modelBuilder.Entity("CountBookBackend.Data.ApplicationUser", b =>
                 {
                     b.HasOne("CountBookBackend.Data.UserGroup", "UserGroup")
-                        .WithMany("ApplicationUsers")
+                        .WithMany()
                         .HasForeignKey("UserGroupId");
                 });
 

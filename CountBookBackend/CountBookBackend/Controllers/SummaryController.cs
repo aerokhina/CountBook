@@ -52,7 +52,8 @@ namespace CountBookBackend.Controllers
     {
       var userId = User.GetId();
       IQueryable<Record> recordQuery = _context.Record
-        .Where(x => x.Type == model.RecordType && x.ApplicationUserId == userId)
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId))
+        .Where(x => x.Type == model.RecordType)
         .Include(x => x.Category);
 
       if (model.StartDate != null) 
@@ -85,7 +86,7 @@ namespace CountBookBackend.Controllers
     {
       var userId = User.GetId();
       var result = await _context.Record
-        .Where(x => x.ApplicationUserId == userId)
+        .Where(x => x.ApplicationUserId == userId || x.ApplicationUser.UserGroup.ApplicationUsers.Any(user => user.Id == userId))
         .Where(x => x.Type == type && x.Date >= startDate && x.Date <= endDate)
         .SumAsync(x => x.Amount);
       return result;

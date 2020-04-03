@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CountBookBackend.Data
 {
-  public class ShoppingItem
+  public class ShoppingItem : IUserEntity
   {
     public int Id { get; set; }
 

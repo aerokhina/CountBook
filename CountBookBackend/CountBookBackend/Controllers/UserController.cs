@@ -34,7 +34,8 @@ namespace CountBookBackend.Controllers
         new ApplicationUser()
         {
           Email = model.Email,
-          UserName = model.Name,
+          UserName = model.Email,
+          Name = model.Name
         },
         model.Password
       );
@@ -74,13 +75,20 @@ namespace CountBookBackend.Controllers
     public async Task<IActionResult> GetProfile()
     {
       var id = User.GetId();
-      var user = await _userManager.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+      var user = await _userManager.Users
+        .Include(x => x.UserGroup)
+        .Where(x => x.Id == id)
+        .FirstOrDefaultAsync();
 
-      return Ok(new EditProfileModel
-      {
-        Name = user.UserName,
-        Email = user.Email
-      });
+      return Ok(
+        new ProfileModel
+        {
+          Name = user.Name,
+          Email = user.Email,
+          UserGroupId = user.UserGroupId,
+          UserGroupName = user.UserGroup?.Name
+        }
+      );
     }
 
     [HttpPost]
@@ -91,14 +99,16 @@ namespace CountBookBackend.Controllers
       var id = User.GetId();
       var user = await _userManager.Users.Where(x => x.Id == id).FirstAsync();
 
-      user.UserName = model.Name;
+      user.Name = model.Name;
+      user.UserName = model.Email;
       user.Email = model.Email;
+      user.UserGroupId = model.UserGroupId;
 
       await _userManager.UpdateAsync(user);
 
       return Ok();
     }
-    
+
     [HttpPost]
     [Authorize]
     [Route("[action]")]
@@ -133,6 +143,29 @@ namespace CountBookBackend.Controllers
 
       return Ok();
     }
+
+    [HttpPost]
+    [Route("[action]")]
+    public async Task<IActionResult> ResetPassword([FromBody] UserLoginModel model)
+    {
+      var user = await _userManager.Users.Where(x => x.Email == model.Email).FirstAsync();
+
+      await _userManager.RemovePasswordAsync(user);
+      var resetPassword = await _userManager.AddPasswordAsync(user, model.Password);
+
+      if (!resetPassword.Succeeded)
+      {
+        return BadRequest(
+          new ProblemDetails()
+          {
+            Type = "BadPassword"
+          }
+        );
+      }
+
+      return Ok();
+    }
+
 
     private IActionResult BadLoginPassword()
     {

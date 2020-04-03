@@ -26,6 +26,53 @@
       </div>
     </div>
   </div>
+
+  <div class="form-row">
+    <div class="col-md-4 mr-3">
+      <select class="my-2 browser-default custom-select" formControlName="groupSelect">
+        <!--  <option disabled hidden selected value="">Выбрать группу</option> -->
+        <option *ngFor="let group of userGroups" [ngValue]="group.id">{{group.name}}</option>
+      </select>
+    </div>
+    <div class="col-md-4 mr-3">
+      <button (click)="onAddGroup(addGroup)" class="my-2 btn btn-primary" type="button">Добавить группу</button>
+    </div>
+  </div>
+  <div *ngIf="groupSelect.invalid && (groupSelect.dirty || groupSelect.touched)"
+       class="alert alert-danger">
+    <div *ngIf="groupSelect.errors.required">
+      Выберите группу
+    </div>
+  </div>
   <button class="btn btn-primary" type="submit">Ok</button>
   <button class="btn btn-secondary float-right" routerLink="/profile" type="button">Отмена</button>
 </form>
+
+<ng-template #addGroup let-modal>
+  <div aria-hidden="true" class="modal fade" role="dialog" tabindex="-1">
+    <h4 class="modal-title" id="modalitem-basic-title">Добавить группу</h4>
+    <button (click)="modal.dismiss()" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addGroupWindow">
+      <div class="form-group">
+        <label for="groupName">Название группы</label>
+        <div class="input-group">
+          <input formControlName="groupName" id="groupName" placeholder="Группа" type="text">
+          <div *ngIf="groupName.invalid && (groupName.dirty || groupName.touched)"
+               class="alert alert-danger">
+            <div *ngIf="groupName.errors.required">
+              Введите наименование.
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="onAddGroupName(modal)" class="btn btn-outline-dark" type="button">Добавить</button>
+    <button (click)="modal.dismiss()" class="btn btn-outline-dark" type="button">Отмена</button>
+  </div>
+</ng-template>
